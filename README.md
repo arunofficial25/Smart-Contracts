@@ -1,68 +1,64 @@
- ** MyContract **
-==================
+# TestContract
+=======================
 
-A simple contract for managing a balance and performing deposits, withdrawals, and transfers.
+## Overview
+-----------
 
-**Contract Description**
+This is a simple Solidity contract that demonstrates the use of `require()`, `assert()`, and `revert()` statements. The contract allows the owner to set and manage a balance, and provides functions for withdrawing, depositing, and transferring ownership.
 
-This contract allows a single owner to manage a balance and perform the following actions:
+## Functions
+------------
 
-* Deposit funds into the contract
-* Withdraw funds from the contract
-* Transfer funds to another address
+### 1. `setBalance(uint _balance)`
 
-The contract ensures that only the owner can perform these actions, and that the balance is sufficient to cover withdrawals and transfers.
+Sets the balance of the contract to `_balance`. Only the owner can call this function.
 
-**Functions**
+### 2. `withdraw(uint _amount)`
 
-### deposit(uint amount)
+Withdraws `_amount` from the contract's balance. The function checks that the balance is sufficient before making the withdrawal.
 
-Deposits `amount` into the contract.
+### 3. `transferOwnership(address _newOwner)`
 
-* Requires: `msg.sender` is the owner
-* Asserts: `amount` is positive
-* Updates: `balance` += `amount`
+Transfers ownership of the contract to `_newOwner`. Only the current owner can call this function.
 
-### withdraw(uint amount)
+### 4. `getBalance()`
 
-Withdraws `amount` from the contract.
+Returns the current balance of the contract.
 
-* Requires: `msg.sender` is the owner
-* Requires: `balance` >= `amount`
-* Updates: `balance` -= `amount`
+### 5. `deposit(uint _amount)`
 
-### transfer(address recipient, uint amount)
+Deposits `_amount` into the contract's balance. The function checks that the sender is valid and that the balance does not overflow.
 
-Transfers `amount` to `recipient`.
+## Statements
+-------------
 
-* Requires: `msg.sender` is the owner
-* Requires: `balance` >= `amount`
-* Reverts: if `recipient` is the zero address
-* Updates: `balance` -= `amount`
-* Emits: `Transfer` event
+### `require()`
 
-**Events**
+Used to validate conditions before executing a function. If the condition is false, the function will revert.
 
-### Transfer(address indexed recipient, uint amount)
+### `assert()`
 
-Emitted when a transfer is made to notify the recipient.
+Used to validate conditions during execution. If the condition is false, the function will revert.
 
-**Security Considerations**
+### `revert()`
 
-* The `owner` variable is private, which means it can only be accessed within the contract.
-* The `balance` variable is public, which means it can be accessed by anyone.
-* The `require` statements ensure that only the owner can perform certain actions.
-* The `assert` statement ensures that the `amount` is positive.
-* The `revert` statement ensures that the contract reverts if the `recipient` is the zero address.
+Used to manually revert a function call. Can be used to provide a custom error message.
 
-**Deployment**
+## Deployment
+------------
 
-To deploy this contract, simply compile and deploy it to your preferred blockchain network using a tool such as HardHat or Remix.
+To deploy this contract, simply compile and deploy it to your preferred Ethereum network using a tool like Truffle or Remix.
 
-**Testing**
+## Testing
+---------
 
-To test this contract, you can use a testing framework such as HardHat's built-in testing suite or Truffle's testing framework.
+To test this contract, you can use a tool like Truffle or Hardhat to write and execute test cases.
 
-**License**
+## License
+---------
+
+Arun
+(22bet10320@cuchd.in)
+(kumararunlamba89@gmail.com)
 
 This contract is licensed under the MIT License.
