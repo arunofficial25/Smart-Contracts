@@ -1,55 +1,47 @@
+/*
+write a smart contract that implements the require(), assert() and revert() statements.
+*/
+
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-contract MyContract {
+contract TestContract {
     address private owner;
     uint public balance;
 
     constructor() {
         owner = msg.sender;
-        balance = 0;
     }
 
-    function deposit(uint amount) public {
-        // Require that the sender is the owner
-        require(msg.sender == owner, "Only the owner can deposit funds");
-
-        // Assert that the amount is positive
-        assert(amount > 0);
-
-        // Update the balance
-        balance += amount;
+    // Function 1: Set balance with require statement
+    function setBalance(uint _balance) public {
+        require(msg.sender == owner, "Only the owner can set the balance");
+        balance = _balance;
     }
 
-    function withdraw(uint amount) public {
-        // Require that the sender is the owner
-        require(msg.sender == owner, "Only the owner can withdraw funds");
-
-        // Check that the balance is sufficient
-        require(balance >= amount, "Insufficient balance");
-
-        // Update the balance
-        balance -= amount;
+    // Function 2: Withdraw balance with require statement
+    function withdraw(uint _amount) public {
+        require(balance >= _amount, "Insufficient balance");
+        balance -= _amount;
     }
 
-    function transfer(address recipient, uint amount) public {
-        // Require that the sender is the owner
-        require(msg.sender == owner, "Only the owner can transfer funds");
-
-        // Check that the balance is sufficient
-        require(balance >= amount, "Insufficient balance");
-
-        // Revert if the recipient is the zero address
-        if (recipient == address(0)) {
-            revert("Cannot transfer to the zero address");
+    // Function 3: Transfer ownership with revert statement
+    function transferOwnership(address _newOwner) public {
+        if (msg.sender!= owner) {
+            revert("Only the owner can transfer ownership");
         }
-
-        // Update the balance
-        balance -= amount;
-
-        // Emit an event to notify the recipient
-        emit Transfer(recipient, amount);
+        owner = _newOwner;
     }
 
-    event Transfer(address indexed recipient, uint amount);
+    // Function 4: Get balance with no statements
+    function getBalance() public view returns (uint) {
+        return balance;
+    }
+
+    // Function 5: Deposit balance with require and assert statements
+    function deposit(uint _amount) public {
+        require(msg.sender!= address(0), "Invalid sender");
+        balance += _amount;
+        assert(balance >= _amount); // Check for overflow
+    }
 }
